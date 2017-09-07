@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8d929f86-2639-4874-a5a0-78fbaa224fd2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ua/rd/ioc/UnableCreateBeanException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ua/rd/ioc/ApplicationContext.class" afterPath="$PROJECT_DIR$/target/classes/ua/rd/ioc/ApplicationContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ua/rd/ioc/BeanDefinition.class" afterPath="$PROJECT_DIR$/target/classes/ua/rd/ioc/BeanDefinition.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ua/rd/ioc/JavaMapConfig.class" afterPath="$PROJECT_DIR$/target/classes/ua/rd/ioc/JavaMapConfig.class" />
+    <list default="true" id="8d929f86-2639-4874-a5a0-78fbaa224fd2" name="Default" comment="l1h2">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/ua/rd/ioc/ApplicationContextTest.class" afterPath="$PROJECT_DIR$/target/test-classes/ua/rd/ioc/ApplicationContextTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ua/rd/ioc/ApplicationContext.java" afterPath="$PROJECT_DIR$/src/main/java/ua/rd/ioc/ApplicationContext.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ua/rd/ioc/JavaMapConfig.java" afterPath="$PROJECT_DIR$/src/main/java/ua/rd/ioc/JavaMapConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/ua/rd/ioc/ApplicationContextTest.java" afterPath="$PROJECT_DIR$/src/test/java/ua/rd/ioc/ApplicationContextTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -27,6 +20,12 @@
     <SUITE FILE_PATH="coverage/Spring$ApplicationContextTest_getBeanDefinitionNamesWith_ONE_BeanDefinitionContext_IS_NOT_NULL.coverage" NAME="ApplicationContextTest.getBeanDefinitionNamesWith_ONE_BeanDefinitionContext_IS_NOT_NULL Coverage Results" MODIFIED="1504795583284" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>ua.rd.ioc.*</FILTER>
     </SUITE>
+    <SUITE FILE_PATH="coverage/Spring$ApplicationContextTest.coverage" NAME="ApplicationContextTest Coverage Results" MODIFIED="1504796642245" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ua.rd.ioc.*</FILTER>
+    </SUITE>
+  </component>
+  <component name="CoverageOptionsProvider">
+    <option name="myAddOrReplace" value="0" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -37,7 +36,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ApplicationContextTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ApplicationContextTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/ua/rd/ioc/ApplicationContextTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="392">
@@ -49,11 +48,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ApplicationContext.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ApplicationContext.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/ua/rd/ioc/ApplicationContext.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="39" column="9" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
+            <state relative-caret-position="-115">
+              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -74,7 +73,7 @@
       <file leaf-file-name="JavaMapConfig.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ua/rd/ioc/JavaMapConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
+            <state relative-caret-position="259">
               <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -131,8 +130,8 @@
         <option value="$PROJECT_DIR$/src/main/java/ua/rd/ioc/BeanDefinition.java" />
         <option value="$PROJECT_DIR$/src/main/java/ua/rd/ioc/JavaMapConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/ua/rd/ioc/UnableCreateBeanException.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ua/rd/ioc/ApplicationContext.java" />
         <option value="$PROJECT_DIR$/src/test/java/ua/rd/ioc/ApplicationContextTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ua/rd/ioc/ApplicationContext.java" />
       </list>
     </option>
   </component>
@@ -222,6 +221,48 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spring" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spring" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ioc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -322,7 +363,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.ApplicationContextTest.getBeanOneBeanCannotCreateException">
+  <component name="RunManager" selected="JUnit.ApplicationContextTest">
     <configuration default="false" name="ApplicationContextTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -870,8 +911,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.ApplicationContextTest.getBeanOneBeanCannotCreateException" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.ApplicationContextTest" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.ApplicationContextTest" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.ApplicationContextTest.getBeanOneBeanCannotCreateException" />
         <item index="2" class="java.lang.String" itemvalue="JUnit.ApplicationContextTest.getBeanDefinitionNamesWith_ONE_BeanDefinitionContext_IS_NOT_NULL" />
         <item index="3" class="java.lang.String" itemvalue="JUnit.ApplicationContextTest.name" />
         <item index="4" class="java.lang.String" itemvalue="JUnit.ApplicationContextTest.getBeandefinitionWith_ONE_BeanDefinition" />
@@ -916,16 +957,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1504785424000</updated>
-      <workItem from="1504793682080" duration="2902000" />
+      <workItem from="1504793682080" duration="4074000" />
     </task>
+    <task id="LOCAL-00001" summary="l1h1">
+      <created>1504796613771</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1504796613771</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TestHistory">
     <history-entry file="ApplicationContextTest - 2017.09.07 at 17h 55m 09s.xml">
       <configuration name="ApplicationContextTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ApplicationContextTest_getBeanDefinitionNamesWith_ONE_BeanDefinitionContext_IS_NOT_NULL - 2017.09.07 at 17h 46m 31s.xml">
-      <configuration name="ApplicationContextTest.getBeanDefinitionNamesWith_ONE_BeanDefinitionContext_IS_NOT_NULL" configurationId="JUnit" />
+    <history-entry file="ApplicationContextTest - 2017.09.07 at 18h 04m 02s.xml">
+      <configuration name="ApplicationContextTest" configurationId="JUnit" />
     </history-entry>
     <history-entry file="ApplicationContextTest_getBeanDefinitionNamesWith_ONE_BeanDefinitionContext_IS_NOT_NULL - 2017.09.07 at 17h 46m 34s.xml">
       <configuration name="ApplicationContextTest.getBeanDefinitionNamesWith_ONE_BeanDefinitionContext_IS_NOT_NULL" configurationId="JUnit" />
@@ -953,7 +1002,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2902000" />
+    <option name="totallyTimeSpent" value="4074000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -981,7 +1030,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298731" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26715687" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3137255" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1010,6 +1059,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="l1h1" />
+    <option name="LAST_COMMIT_MESSAGE" value="l1h1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1239,14 +1292,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ua/rd/ioc/NoSuchBeanException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="57" selection-start-line="5" selection-start-column="57" selection-end-line="5" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/ua/rd/IoCRunnerTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -1271,20 +1316,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ua/rd/ioc/JavaMapConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#795#796#0" expanded="true" />
-            <element signature="e#838#839#0" expanded="true" />
-            <element signature="e#905#906#0" expanded="true" />
-            <element signature="e#948#949#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ua/rd/ioc/UnableCreateBeanException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -1296,12 +1327,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ua/rd/ioc/ApplicationContext.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ua/rd/ioc/NoSuchBeanException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="39" column="9" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
+        <state relative-caret-position="85">
+          <caret line="5" column="59" selection-start-line="5" selection-start-column="59" selection-end-line="5" selection-end-column="59" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#167#168#0" expanded="true" />
+            <element signature="e#202#203#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1312,6 +1344,30 @@
           <caret line="117" column="35" selection-start-line="117" selection-start-column="35" selection-end-line="117" selection-end-column="35" />
           <folding>
             <element signature="e#2002#2020#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ua/rd/ioc/JavaMapConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#795#796#0" expanded="true" />
+            <element signature="e#838#839#0" expanded="true" />
+            <element signature="e#905#906#0" expanded="true" />
+            <element signature="e#948#949#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ua/rd/ioc/ApplicationContext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-115">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

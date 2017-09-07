@@ -21,10 +21,7 @@ public class ApplicationContext implements Context {
     @Override
     public Object getBean(String beanName) {
         List<BeanDefinition> beanDefinitions = Arrays.asList(this.beanDefinitions);
-        if (beanDefinitions
-                .stream()
-                .map(BeanDefinition::getBeanName)
-                .anyMatch(n -> n.equals(beanName))){
+        if (beanDefinitions.stream().map(BeanDefinition::getBeanName).anyMatch(n -> n.equals(beanName))){
             BeanDefinition beanDefinition = beanDefinitions.stream().filter(bD -> bD.getBeanName().equals(beanName)).findFirst().orElse(null);
             return createBean(beanDefinition);
         }
