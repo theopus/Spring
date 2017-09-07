@@ -32,25 +32,37 @@ public class ApplicationContextTest {
         //given
         String beanName = "FirstBean";
         Class<TestBean> beanType = TestBean.class;
-        //map instead list for beanName - beanType
-//        List<String> beandescription = Arrays.asList(beanName);
-//ToDo: make it work(create beans)
+        Map<String, Class<?>> beandescription  = new HashMap<String, Class<?>>(){
+            {put(beanName,beanType);}
+        };
+        Config config = new JavaMapConfig(beandescription);
+        Context context = new ApplicationContext(config);
+        //whenthen
+        TestBean bean = (TestBean) context.getBean(beanName);
 
+    }
+    @Test
+    public void getBeanDefinitionNamesWith_ONE_BeanDefinitionContext_IS_NOT_NULL() throws Exception {
+        //given
+        String beanName = "FirstBean";
+        Class<TestBean> beanType = TestBean.class;
         Map<String, Class<?>> beandescription  = new HashMap<String, Class<?>>(){
             {put(beanName,beanType);}
         };
         Config config = new JavaMapConfig(beandescription);
         Context context = new ApplicationContext(config);
 
-        TestBean bean = (TestBean) context.getBean(beanName);
+        //when
+        Object actual = context.getBean(beanName);
 
-
+        //then
+        assertNotNull(actual);
     }
 
     @Test
     public void getBeandefinitionWith_ZERO_BeanDefinition() throws Exception {
         //given
-        List<String> beandescription = Collections.emptyList();
+        Map<String, Class<?>> beandescription  = new HashMap<String, Class<?>>();
         Config config = new JavaMapConfig(beandescription);
         Context context = new ApplicationContext(config);
 
@@ -67,7 +79,11 @@ public class ApplicationContextTest {
         //given
         String beanName1 = "FirstBean";
         String beanName = "SecondBean";
-        List<String> beandescription = Arrays.asList(beanName1, beanName);
+        Class<TestBean> beanType = TestBean.class;
+        Map<String, Class<?>> beandescription  = new HashMap<String, Class<?>>(){
+            {put(beanName1,beanType);}
+            {put(beanName,beanType);}
+        };
         Config config = new JavaMapConfig(beandescription);
         Context context = new ApplicationContext(config);
 
@@ -79,11 +95,13 @@ public class ApplicationContextTest {
         assertArrayEquals(beanDefinitionNames,expected);
     }
 
-    @Test
-    public void getBeanDefinitionNamesWith_ONE_BeanDefinitionContext_IS_NOT_NULL() throws Exception {
-        //given
+    @Test(expected = UnableCreateBeanException.class)
+    public void getBeanOneBeanCannotCreateException() throws Exception {
         String beanName = "FirstBean";
-        List<String> beandescription = Arrays.asList(beanName);
+        Class<UnavalibleTestBean> uncreatable = UnavalibleTestBean.class;
+        Map<String, Class<?>> beandescription  = new HashMap<String, Class<?>>(){
+            {put(beanName,uncreatable);}
+        };
         Config config = new JavaMapConfig(beandescription);
         Context context = new ApplicationContext(config);
 
@@ -94,6 +112,9 @@ public class ApplicationContextTest {
         assertNotNull(actual);
     }
 
-    private class TestBean {
+    public static class TestBean {
+    }
+
+    private static class UnavalibleTestBean {
     }
 }

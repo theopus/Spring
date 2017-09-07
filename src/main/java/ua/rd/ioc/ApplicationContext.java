@@ -25,11 +25,19 @@ public class ApplicationContext implements Context {
                 .stream()
                 .map(BeanDefinition::getBeanName)
                 .anyMatch(n -> n.equals(beanName))){
-            BeanDefinition beanDefinition;
-            return beanDefinition.getBeanType().newInstance();
+            BeanDefinition beanDefinition = beanDefinitions.stream().filter(bD -> bD.getBeanName().equals(beanName)).findFirst().orElse(null);
+            return createBean(beanDefinition);
         }
         else
             throw new NoSuchBeanException();
+    }
+
+    private Object createBean(BeanDefinition beanDefinition){
+        try {
+            return beanDefinition.getBeanType().newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new UnableCreateBeanException(e);
+        }
     }
 
     @Override
