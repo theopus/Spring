@@ -19,7 +19,11 @@ public class JavaMapConfig implements Config {
 
     @Override
     public BeanDefinition[] beanDefinitions() {
-        BeanDefinition[] beanDefinitions = beanDescriptions.keySet().stream().map(key -> getBeanDefinition(key, beanDescriptions.get(key))).toArray(BeanDefinition[]::new);
+        BeanDefinition[] beanDefinitions = beanDescriptions
+                .keySet()
+                .stream()
+                .map(key -> getBeanDefinition(key, beanDescriptions.get(key)))
+                .toArray(BeanDefinition[]::new);
         return beanDefinitions;
     }
 

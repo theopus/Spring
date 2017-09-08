@@ -95,26 +95,8 @@ public class ApplicationContextTest {
         assertArrayEquals(beanDefinitionNames,expected);
     }
 
-    @Test(expected = UnableCreateBeanException.class)
-    public void getBeanOneBeanCannotCreateException() throws Exception {
-        String beanName = "FirstBean";
-        Class<UnavalibleTestBean> uncreatable = UnavalibleTestBean.class;
-        Map<String, Class<?>> beandescription  = new HashMap<String, Class<?>>(){
-            {put(beanName,uncreatable);}
-        };
-        Config config = new JavaMapConfig(beandescription);
-        Context context = new ApplicationContext(config);
 
-        //when
-        Object actual = context.getBean(beanName);
-
-        //then
-        assertNotNull(actual);
+    private static class TestBean {
     }
 
-    public static class TestBean {
-    }
-
-    private static class UnavalibleTestBean {
-    }
 }

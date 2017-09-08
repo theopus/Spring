@@ -1,5 +1,7 @@
 package ua.rd.ioc;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,8 +33,10 @@ public class ApplicationContext implements Context {
 
     private Object createBean(BeanDefinition beanDefinition){
         try {
-            return beanDefinition.getBeanType().newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+            Constructor declaredConstructor = beanDefinition.getBeanType().getDeclaredConstructor();
+            declaredConstructor.setAccessible(true);
+            return declaredConstructor.newInstance();
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             throw new UnableCreateBeanException(e);
         }
     }
@@ -45,4 +49,5 @@ public class ApplicationContext implements Context {
                 .toArray(String[]::new);
         return beanDefinitionNames;
     }
+
 }
