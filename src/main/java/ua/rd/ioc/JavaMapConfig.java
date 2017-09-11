@@ -1,6 +1,5 @@
 package ua.rd.ioc;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -8,9 +7,9 @@ import java.util.Map;
  */
 public class JavaMapConfig implements Config {
 
-    private Map<String, Class<?>> beanDescriptions;
+    private  Map<String, Map<String, Object>> beanDescriptions;
 
-    public JavaMapConfig(Map<String, Class<?>> beanDescriptions) {
+    public JavaMapConfig(Map<String, Map<String, Object>> beanDescriptions) {
         this.beanDescriptions = beanDescriptions;
 
     }
@@ -27,17 +26,10 @@ public class JavaMapConfig implements Config {
         return beanDefinitions;
     }
 
-    private BeanDefinition getBeanDefinition(String name, Class<?> type) {
-        return new BeanDefinition() {
-            @Override
-            public String getBeanName() {
-                return name;
-            }
+    private BeanDefinition getBeanDefinition(String name, Map<String, Object> entry) {
+        return new SimpleBeanDefinition(name,
+                (Class<?>) entry.get("type"),
+                (boolean) entry.getOrDefault("isPrototype",false));
 
-            @Override
-            public Class<?> getBeanType() {
-                return type;
-            }
-        };
     }
 }
