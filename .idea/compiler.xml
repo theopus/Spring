@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="CustomIoC" />
+        <module name="SpringIoC" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="CustomIoC" target="1.8" />
+      <module name="SpringIoC" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

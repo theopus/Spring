@@ -1,78 +1,91 @@
 package ua.rd.ioc;
 
 import java.lang.reflect.Constructor;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
-/**
- * Created by Oleksandr_Tkachov on 9/7/2017.
- */
 public class ApplicationContext implements Context {
 
     private List<BeanDefinition> beanDefinitions;
-
-    private Map<String, Object> cache = new HashMap<>();
+    private Map<String, Object> beans = new HashMap<>();
 
     public ApplicationContext(Config config) {
-         this.beanDefinitions = Arrays.asList(config.beanDefinitions());
+        beanDefinitions = Arrays.asList(config.beanDefinitions());
     }
 
     public ApplicationContext() {
-        beanDefinitions = Arrays.asList(Config.EMPTY_BEAN_DEFINIION);
+        beanDefinitions = Arrays.asList(Config.EMPTY_BEANDEFINITION);//new BeanDefinition[0];
     }
 
-    @Override
     public Object getBean(String beanName) {
-        if (cache.containsKey(beanName))
-            return cache.get(beanName);
-        if (beanDefinitions.stream().map(BeanDefinition::getBeanName).anyMatch(n -> n.equals(beanName))){
-            BeanDefinition beanDefinition = beanDefinitions.stream().filter(bD -> bD.getBeanName().equals(beanName)).findFirst().orElse(null);
-            Object nonArgBean = createBean(beanDefinition);
-            return cache.put(beanName, nonArgBean);
+        BeanDefinition beanDefinition = getBeanDefinitionByName(beanName);
+        Object bean = beans.get(beanName);
+        if(bean == null) {
+            bean = createNewBean(beanDefinition);
+            if (!beanDefinition.isPrototype()) {
+                beans.put(beanName, bean);
+            }
         }
-        else
-            throw new NoSuchBeanException();
+        return bean;
     }
 
+    private Object createNewBean(BeanDefinition beanDefinition) {
+        Object bean = createNewBeanInstance(beanDefinition);
+        return bean;
+    }
 
-    private Object createBean(BeanDefinition beanDefinition){
-        Class<?> type = beanDefinition.getBeanType();
+    private BeanDefinition getBeanDefinitionByName(String beanName) {
+        return beanDefinitions.stream()
+                .filter(bd -> Objects.equals(bd.getBeanName(), beanName))
+                .findAny().orElseThrow(NoSuchBeanException::new);
+    }
+
+    private Object createNewBeanInstance(BeanDefinition bd) {
+        Class<?> type = bd.getBeanType();
+        Constructor<?> constructor = type.getDeclaredConstructors()[0];
+        Object newBean = null;
+        if(constructor.getParameterCount() == 0) {
+            newBean = createBeanWithDefaultConstructor(type);
+        } else {
+            newBean = createBeanWithConstructorWithParams(type);
+        }
+        return newBean;
+    }
+
+    private Object createBeanWithConstructorWithParams(Class<?> type) {
         Constructor<?> constructor = type.getDeclaredConstructors()[0];
         Class<?>[] parameterTypes = constructor.getParameterTypes();
-        Object newBean = null;
-        if (parameterTypes.length == 0){
-            newBean = createBeanWithDeafultConstructor(beanDefinition.getBeanType());
-        }
-        else {
-            newBean = createBeanWithContructor(type);
-        }
-        return newBean;
-    }
 
-    private Object createBeanWithContructor(Class<?> type) {
-        Constructor<?> s = type.getDeclaredConstructors()[0];
-        return null;
-    }
+        Set<Object> objects = new LinkedHashSet<>();
+        for (Class<?> parameterType : parameterTypes) {
+            String simpleName = parameterType.getSimpleName();
+            String firstLeterLow = simpleName.substring(0, 1).toLowerCase() + simpleName.substring(1);
+            System.out.println(firstLeterLow);
+            objects.add(this.getBean(firstLeterLow));
+        }
 
-    private Object createBeanWithDeafultConstructor(Class<?> type){
-        Object newBean = null;
+        Object o = null;
         try {
-            newBean = type.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+            o = constructor.newInstance(objects.toArray(new Object[objects.size()]));
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
+        return o;
+    }
+
+    private Object createBeanWithDefaultConstructor(Class<?> type) {
+        Object newBean;
+        try {
+           newBean = type.newInstance();
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
+        }
         return newBean;
     }
 
-    @Override
     public String[] getBeanDefinitionNames() {
-        String[] beanDefinitionNames = beanDefinitions
-                .stream()
+        return beanDefinitions.stream()
                 .map(BeanDefinition::getBeanName)
                 .toArray(String[]::new);
-        return beanDefinitionNames;
     }
-
 }

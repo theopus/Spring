@@ -1,15 +1,16 @@
 package ua.rd.ioc;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Oleksandr_Tkachov on 9/7/2017.
- */
 public class ApplicationContextTest {
+
     @Test(expected = NoSuchBeanException.class)
     public void getBeanWithEmptyContext() throws Exception {
         Context context = new ApplicationContext();
@@ -20,212 +21,274 @@ public class ApplicationContextTest {
     public void getBeanDefinitionNamesWithEmptyContext() throws Exception {
         //given
         Context context = new ApplicationContext();
+
         //when
         String[] actual = context.getBeanDefinitionNames();
-        //then
-        String[] expected ={};
+
+        //tnen
+        String[] expected = {};
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    public void getBeandefinitionWith_ONE_BeanDefinition() throws Exception {
-        //given
+    public void getBeanDefinitionNamesWithOneBeanDefinition() throws Exception {
+        String beanName = "FirstBean";
+        List<String> beanDescriptions = Arrays.asList(beanName);
+        Config config = new JavaMapConfig(convertTestListToMap(beanDescriptions));
+        Context context = new ApplicationContext(config);
+
+        String[] actual = context.getBeanDefinitionNames();
+
+        String[] expected = {beanName};
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void getBeanDefinitionNamesWithSeveralBeanDefinitions() throws Exception {
+        String beanName1 = "FirstBean";
+        String beanName2 = "SecondBean";
+        List<String> beanDescriptions = Arrays.asList(beanName1, beanName2);
+        Config config = new JavaMapConfig(convertTestListToMap(beanDescriptions));
+        Context context = new ApplicationContext(config);
+
+        String[] actual = context.getBeanDefinitionNames();
+
+        String[] expected = {beanName1, beanName2};
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void getBeanDefinitionNamesWithEmptyBeanDefinition() throws Exception {
+        List<String> beanDescriptions = Collections.emptyList();
+        Config config = new JavaMapConfig(convertTestListToMap(beanDescriptions));
+        Context context = new ApplicationContext(config);
+
+        String[] actual = context.getBeanDefinitionNames();
+
+        String[] expected = {};
+        assertArrayEquals(expected, actual);
+    }
+
+    @Ignore
+    @Test(expected = IllegalArgumentException.class)
+    public void getBeanWithOneBeanDefinitionWithoutType() throws Exception {
+        String beanName = "FirstBean";
+        List<String> beanDescriptions = Arrays.asList(beanName);
+        Config config = new JavaMapConfig(convertTestListToMap(beanDescriptions));
+        Context context = new ApplicationContext(config);
+
+        Object bean = context.getBean(beanName);
+    }
+
+    @Test
+    public void getBeanWithOneBeanDefinition() throws Exception {
         String beanName = "FirstBean";
         Class<TestBean> beanType = TestBean.class;
-        Map<String, Map<String, Object>> beandescription  = new HashMap<String, Map<String, Object>>(){
-            {
-                put(beanName, new HashMap<String, Object>(){
-                    {
-                        put("type", beanType);
-                    }
-                });
-            }
-        };
-        Config config = new JavaMapConfig(beandescription);
+        //List<String> beanDescriptions = Arrays.asList(beanName);
+        Map<String, Map<String, Object>> beanDescriptions =
+                new HashMap<String, Map<String, Object>>() {{
+                    put(beanName,
+                            new HashMap<String, Object>() {{
+                                put("type", beanType);
+                            }}
+                    );
+                }};
+
+        Config config = new JavaMapConfig(beanDescriptions);
         Context context = new ApplicationContext(config);
-        //whenthen
+
         TestBean bean = (TestBean) context.getBean(beanName);
 
-    }
-    @Test
-    public void getBeanDefinitionNamesWith_ONE_BeanDefinitionContext_IS_NOT_NULL() throws Exception {
-        //given
-        String beanName = "FirstBean";
-        Class<TestBean> beanType = TestBean.class;
-        Map<String, Map<String, Object>> beandescription  = new HashMap<String, Map<String, Object>>(){
-            {
-                put(beanName, new HashMap<String, Object>(){
-                    {
-                        put("type", beanType);
-                    }
-                });
-            }
-        };
-
-        Config config = new JavaMapConfig(beandescription);
-        Context context = new ApplicationContext(config);
-
-        //when
-        Object actual = context.getBean(beanName);
-
-        //then
-        assertNotNull(actual);
+        assertNotNull(bean);
     }
 
     @Test
-    public void getBeandefinitionWith_ZERO_BeanDefinition() throws Exception {
-        //given
-        Map<String, Map<String, Object>> beandescription  = new HashMap<String, Map<String, Object>>(){};
-        Config config = new JavaMapConfig(beandescription);
-        Context context = new ApplicationContext(config);
-
-        //when
-        String[] beanDefinitionNames = context.getBeanDefinitionNames();
-
-        //then
-        String[] expected  = {};
-        assertArrayEquals(beanDefinitionNames,expected);
-    }
-
-    @Test
-    public void getBeandefinitionWith_SEVERAL_BeanDefinition() throws Exception {
-        //given
+    public void getBeanNotSameInstancesWithSameType() throws Exception {
         String beanName1 = "FirstBean";
-        String beanName = "SecondBean";
+        String beanName2 = "SecondBean";
         Class<TestBean> beanType = TestBean.class;
+        Map<String, Map<String, Object>> beanDescriptions =
+                new HashMap<String, Map<String, Object>>() {{
+                    put(beanName1,
+                            new HashMap<String, Object>() {{
+                                put("type", beanType);
+                            }}
+                    );
+                    put(beanName2,
+                            new HashMap<String, Object>() {{
+                                put("type", beanType);
+                            }}
+                    );
+                }};
 
-        Map<String, Map<String, Object>> beandescription = get2DiffBD(beanName1, beanName, beanType);
-        Config config = new JavaMapConfig(beandescription);
+        Config config = new JavaMapConfig(beanDescriptions);
         Context context = new ApplicationContext(config);
 
-        //when
-        String[] beanDefinitionNames = context.getBeanDefinitionNames();
+        TestBean bean1 = (TestBean) context.getBean(beanName1);
+        TestBean bean2 = (TestBean) context.getBean(beanName2);
 
-        //then
-        String[] expected  = {beanName1,beanName};
-        assertArrayEquals(beanDefinitionNames,expected);
-    }
-
-    private Map<String, Map<String, Object>> get2DiffBD(final String beanName1, final String beanName, final Class<TestBean> beanType) {
-        return new HashMap<String, Map<String, Object>>(){
-                {
-                    put(beanName1, new HashMap<String, Object>(){
-                        {
-                            put("type", beanType);
-                        }
-                    });
-                    put(beanName, new HashMap<String, Object>(){
-                        {
-                            put("type", beanType);
-                        }
-                    });
-                }
-            };
+        assertNotSame(bean1, bean2);
     }
 
     @Test
-    public void getBeanIsSingletone() throws Exception {
+    public void getBeanIsSingleton() throws Exception {
         String beanName = "FirstBean";
         Class<TestBean> beanType = TestBean.class;
-        Map<String, Map<String, Object>> beandescription  = new HashMap<String, Map<String, Object>>(){
-            {
-                put(beanName, new HashMap<String, Object>(){
-                    {
-                        put("type", beanType);
-                    }
-                });
-            }
-        };
-        Config config = new JavaMapConfig(beandescription);
+        //List<String> beanDescriptions = Arrays.asList(beanName);
+        Map<String, Map<String, Object>> beanDescriptions =
+                new HashMap<String, Map<String, Object>>() {{
+                    put(beanName,
+                            new HashMap<String, Object>() {{
+                                put("type", beanType);
+                            }}
+                    );
+                }};
+
+        Config config = new JavaMapConfig(beanDescriptions);
         Context context = new ApplicationContext(config);
-
-
 
         TestBean bean1 = (TestBean) context.getBean(beanName);
         TestBean bean2 = (TestBean) context.getBean(beanName);
 
-        assertSame(bean1,bean2);
-
-
+        assertSame(bean1, bean2);
     }
 
     @Test
     public void getBeanIsPrototype() throws Exception {
         String beanName = "FirstBean";
         Class<TestBean> beanType = TestBean.class;
-        Map<String, Map<String, Object>> beandescription  = new HashMap<String, Map<String, Object>>(){
-            {
-                put(beanName, new HashMap<String, Object>(){
-                    {
-                        put("type", beanType);
-                        put("isPrototype", true);
-                    }
-                });
-            }
-        };
-        Config config = new JavaMapConfig(beandescription);
+        Map<String, Map<String, Object>> beanDescriptions =
+                new HashMap<String, Map<String, Object>>() {{
+                    put(beanName,
+                            new HashMap<String, Object>() {{
+                                put("type", beanType);
+                                put("isPrototype", true);
+                            }}
+                    );
+                }};
+
+        Config config = new JavaMapConfig(beanDescriptions);
         Context context = new ApplicationContext(config);
 
         TestBean bean1 = (TestBean) context.getBean(beanName);
         TestBean bean2 = (TestBean) context.getBean(beanName);
 
-        assertNotSame(bean1,bean2);
-
-
-    }
-
-
-    private Map<String, Map<String, Object>> getStringMapMap(final String beanName, final Class<TestBean> beanType) {
-        return new HashMap<String, Map<String, Object>>(){
-                {
-                    put(beanName, new HashMap<String, Object>(){
-                        {
-                            put("type", beanType);
-                        }
-                    });
-                }
-            };
+        assertNotSame(bean1, bean2);
     }
 
     @Test
-    public void getBeanWithContructorAnotherBean() throws Exception {
-        //given
-        String dependent = "InnerBean";
-        String beanName = "Bean";
-        Class<TestBean> dependentType = TestBean.class;
-        Class<TestBeanWithContructor> beanType = TestBeanWithContructor.class;
-        Map<String, Map<String, Object>> beandescription  = new HashMap<String, Map<String, Object>>(){
-            {
-                put(dependent, new HashMap<String, Object>(){
-                    {
-                        put("type", dependentType);
-                    }
-                });
-                put(beanName, new HashMap<String, Object>(){
-                    {
-                        put("type", beanType);
-                    }
-                });
-            }
-        };
-        Config config = new JavaMapConfig(beandescription);
+    public void getBeanWithOneDependedBean() throws Exception {
+        Map<String, Map<String, Object>> beanDescriptions =
+                new HashMap<String, Map<String, Object>>() {{
+                    put("testBean",
+                            new HashMap<String, Object>() {{
+                                put("type", TestBean.class);
+                                put("isPrototype", false);
+                            }}
+                    );
+                    put("testBeanWithConstructor",
+                            new HashMap<String, Object>() {{
+                                put("type", TestBeanWithConstructor.class);
+                                put("isPrototype", false);
+                            }}
+                    );
+                }};
+
+        Config config = new JavaMapConfig(beanDescriptions);
         Context context = new ApplicationContext(config);
-        //whenthen
-        TestBeanWithContructor beanWithContructor = (TestBeanWithContructor) context.getBean(beanName);
 
-        assertNotNull(beanWithContructor);
+        TestBeanWithConstructor bean
+                = (TestBeanWithConstructor) context.getBean("testBeanWithConstructor");
 
+        assertNotNull(bean);
+    }
+
+
+    @Test
+    public void getBeanWithSeveralDependedBeansIsSingleton() throws Exception {
+        Map<String, Map<String, Object>> beanDescriptions =
+                new HashMap<String, Map<String, Object>>() {{
+                    put("testBean",
+                            new HashMap<String, Object>() {{
+                                put("type", TestBean.class);
+                                put("isPrototype", false);
+                            }}
+                    );
+                    put("testBeanWithConstructorTwoParams",
+                            new HashMap<String, Object>() {{
+                                put("type", TestBeanWithConstructorTwoParams.class);
+                                put("isPrototype", false);
+                            }}
+                    );
+                }};
+
+        Config config = new JavaMapConfig(beanDescriptions);
+        Context context = new ApplicationContext(config);
+
+        TestBeanWithConstructorTwoParams bean
+                = (TestBeanWithConstructorTwoParams) context.getBean("testBeanWithConstructorTwoParams");
+
+        assertNotNull(bean);
+        assertNotSame(bean.testBean1, bean.testBean2);
+    }
+
+    @Test
+    public void getBeanWithSeveralDependedBeansIsPrototype() throws Exception {
+        Map<String, Map<String, Object>> beanDescriptions =
+                new HashMap<String, Map<String, Object>>() {{
+                    put("testBean",
+                            new HashMap<String, Object>() {{
+                                put("type", TestBean.class);
+                                put("isPrototype", true);
+                            }}
+                    );
+                    put("testBeanWithConstructorTwoParams",
+                            new HashMap<String, Object>() {{
+                                put("type", TestBeanWithConstructorTwoParams.class);
+                                put("isPrototype", false);
+                            }}
+                    );
+                }};
+
+        Config config = new JavaMapConfig(beanDescriptions);
+        Context context = new ApplicationContext(config);
+
+        TestBeanWithConstructorTwoParams bean
+                = (TestBeanWithConstructorTwoParams) context.getBean("testBeanWithConstructorTwoParams");
+
+        assertNotNull(bean);
+        assertSame(bean.testBean1, bean.testBean2);
+    }
+
+    private Map<String, Map<String, Object>>
+    convertTestListToMap(List<String> beanDescriptionWithBeanNamesOnly) {
+        return beanDescriptionWithBeanNamesOnly.stream()
+                .collect(
+                        Collectors.toMap(
+                                Function.identity(),
+                                beanName -> new HashMap<>())
+                );
     }
 
     static class TestBean {
     }
 
-    static class TestBeanWithContructor{
-        private TestBean bean;
-
-        public TestBeanWithContructor(TestBean bean) {
-            this.bean = bean;
+    static class TestBeanWithConstructor {
+        public TestBeanWithConstructor(TestBean testBean) {
+            this.testBean = testBean;
         }
+
+        private final TestBean testBean;
+    }
+
+    static class TestBeanWithConstructorTwoParams {
+        public TestBeanWithConstructorTwoParams(TestBean testBean1, TestBean testBean2) {
+            this.testBean1 = testBean1;
+            this.testBean2 = testBean2;
+        }
+
+        public final TestBean testBean1;
+        public final TestBean testBean2;
     }
 
 }

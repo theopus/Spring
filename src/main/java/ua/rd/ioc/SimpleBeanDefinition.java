@@ -1,8 +1,5 @@
 package ua.rd.ioc;
 
-/**
- * Created by Oleksandr_Tkachov on 9/11/2017.
- */
 public class SimpleBeanDefinition implements BeanDefinition {
 
     private final String beanName;
