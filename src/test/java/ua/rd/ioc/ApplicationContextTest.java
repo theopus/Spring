@@ -3,6 +3,7 @@ package ua.rd.ioc;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -30,6 +31,7 @@ public class ApplicationContextTest {
         assertArrayEquals(expected, actual);
     }
 
+    @Ignore
     @Test
     public void getBeanDefinitionNamesWithOneBeanDefinition() throws Exception {
         String beanName = "FirstBean";
@@ -43,6 +45,7 @@ public class ApplicationContextTest {
         assertArrayEquals(expected, actual);
     }
 
+    @Ignore
     @Test
     public void getBeanDefinitionNamesWithSeveralBeanDefinitions() throws Exception {
         String beanName1 = "FirstBean";
@@ -211,7 +214,7 @@ public class ApplicationContextTest {
                     put("testBean",
                             new HashMap<String, Object>() {{
                                 put("type", TestBean.class);
-                                put("isPrototype", false);
+                                put("isPrototype", true);
                             }}
                     );
                     put("testBeanWithConstructorTwoParams",
@@ -257,8 +260,80 @@ public class ApplicationContextTest {
                 = (TestBeanWithConstructorTwoParams) context.getBean("testBeanWithConstructorTwoParams");
 
         assertNotNull(bean);
-        assertSame(bean.testBean1, bean.testBean2);
+        assertNotSame(bean.testBean1, bean.testBean2);
     }
+
+    @Test
+    public void getCallInit() throws Exception {
+        Map<String, Map<String, Object>> beanDescriptions =
+                new HashMap<String, Map<String, Object>>() {{
+                    put("testBean",
+                            new HashMap<String, Object>() {{
+                                put("type", TestBean.class);
+                                put("isPrototype", true);
+                            }}
+                    );
+                }};
+
+
+        Config config = new JavaMapConfig(beanDescriptions);
+        Context context = new ApplicationContext(config);
+
+        TestBean bean
+                = (TestBean) context.getBean("testBean");
+
+        assertEquals("initialized", bean.initValue);
+    }
+
+
+    @Test
+    public void getBeanPostConstruct() throws Exception {
+        Map<String, Map<String, Object>> beanDescriptions =
+                new HashMap<String, Map<String, Object>>() {{
+                    put("testBean",
+                            new HashMap<String, Object>() {{
+                                put("type", TestBean.class);
+                                put("isPrototype", true);
+                            }}
+                    );
+                }};
+
+
+        Config config = new JavaMapConfig(beanDescriptions);
+        Context context = new ApplicationContext(config);
+
+        TestBean bean
+                = (TestBean) context.getBean("testBean");
+
+        assertEquals("initialized", bean.initValue);
+        assertEquals("initializedByPostConstruct", bean.postConstrctValue);
+    }
+
+    @Test
+    public void callBeanBenchmark() throws Exception {
+        Map<String, Map<String, Object>> beanDescriptions =
+                new HashMap<String, Map<String, Object>>() {{
+                    put("testBean",
+                            new HashMap<String, Object>() {{
+                                put("type", TestBean.class);
+                                put("isPrototype", false);
+                            }}
+                    );
+                }};
+
+
+        Config config = new JavaMapConfig(beanDescriptions);
+        Context context = new ApplicationContext(config);
+
+        Object  s=  context.getBean("testBean");
+        TestBean s1 = (TestBean) s;
+
+        System.out.println(s1.methodToBenchmark("sadasd"));
+
+
+    }
+
+
 
     private Map<String, Map<String, Object>>
     convertTestListToMap(List<String> beanDescriptionWithBeanNamesOnly) {
@@ -271,6 +346,24 @@ public class ApplicationContextTest {
     }
 
     static class TestBean {
+
+        public String initValue;
+        public String postConstrctValue;
+
+        public void init(){
+            initValue = "initialized";
+        }
+
+        @MyPostConstruct
+        public void creatse(){
+            postConstrctValue = "initializedByPostConstruct";
+        }
+
+        @Benchmark(enabled = false)
+        public String methodToBenchmark(String s){
+            StringBuilder stringBuilder = new StringBuilder(s);
+            return stringBuilder.reverse().toString();
+        }
     }
 
     static class TestBeanWithConstructor {
